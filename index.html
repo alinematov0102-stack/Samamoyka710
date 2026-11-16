@@ -1,0 +1,920 @@
+<!doctype html>
+
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>710 Samamoyka</title>
+    <meta name="theme-color" content="#0b7cff" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <style>
+      :root {
+        --bg: #f3f6fa;
+        --card: #fff;
+        --tx: #14202e;
+        --mu: #6b7a8c;
+        --ac: #0b7cff;
+        --ok: #12a150;
+        --bad: #e5484d;
+        --bd: #e1e8f0;
+        color-scheme: light;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #0d1520;
+          --card: #16212f;
+          --tx: #eaf1f8;
+          --mu: #8fa0b3;
+          --ac: #4b9bff;
+          --ok: #3ecf80;
+          --bad: #ff6b70;
+          --bd: #25344a;
+          color-scheme: dark;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #0d1520;
+        --card: #16212f;
+        --tx: #eaf1f8;
+        --mu: #8fa0b3;
+        --ac: #4b9bff;
+        --ok: #3ecf80;
+        --bad: #ff6b70;
+        --bd: #25344a;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--tx);
+        font:
+          16px/1.4 system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 16px 6px;
+        max-width: 720px;
+        margin: auto;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0;
+      }
+      h2 {
+        font-size: 16px;
+        margin: 18px 0 8px;
+      }
+      #v {
+        max-width: 720px;
+        margin: auto;
+        padding: 0 14px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--bd);
+        border-radius: 16px;
+        padding: 14px;
+        margin: 10px 0;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .k {
+        background: var(--card);
+        border: 1px solid var(--bd);
+        border-radius: 14px;
+        padding: 12px;
+      }
+      .k small {
+        color: var(--mu);
+        display: block;
+        font-size: 12px;
+      }
+      .k b {
+        font-size: 17px;
+        display: block;
+        margin-top: 2px;
+        word-break: break-word;
+      }
+      .pos {
+        color: var(--ok);
+      }
+      .neg {
+        color: var(--bad);
+      }
+      label {
+        display: block;
+        font-size: 13px;
+        color: var(--mu);
+        margin: 10px 0 4px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        font: inherit;
+        color: var(--tx);
+        background: var(--bg);
+        border: 1px solid var(--bd);
+        border-radius: 12px;
+        padding: 13px;
+      }
+      .btn {
+        width: 100%;
+        border: 0;
+        border-radius: 14px;
+        padding: 16px;
+        font:
+          700 18px system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--ac);
+        color: #fff;
+        margin-top: 14px;
+        cursor: pointer;
+      }
+      .btn.s {
+        background: var(--card);
+        color: var(--tx);
+        border: 1px solid var(--bd);
+        padding: 12px;
+        font-size: 15px;
+        margin-top: 8px;
+      }
+      .btn.r {
+        background: var(--bad);
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+      }
+      .row > * {
+        flex: 1;
+      }
+      .seg {
+        display: flex;
+        background: var(--card);
+        border: 1px solid var(--bd);
+        border-radius: 14px;
+        padding: 4px;
+        gap: 4px;
+      }
+      .seg button {
+        flex: 1;
+        border: 0;
+        background: none;
+        color: var(--mu);
+        padding: 10px;
+        border-radius: 10px;
+        font:
+          600 15px system-ui,
+          -apple-system,
+          sans-serif;
+        cursor: pointer;
+      }
+      .seg button.on {
+        background: var(--ac);
+        color: #fff;
+      }
+      .it {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--bd);
+      }
+      .it:last-child {
+        border: 0;
+      }
+      .it small {
+        color: var(--mu);
+        display: block;
+      }
+      .it .a {
+        text-align: right;
+        white-space: nowrap;
+      }
+      .it button {
+        border: 0;
+        background: none;
+        color: var(--ac);
+        padding: 4px 6px;
+        font: inherit;
+        font-size: 13px;
+        cursor: pointer;
+      }
+      .it button.d {
+        color: var(--bad);
+      }
+      .scroll {
+        overflow-x: auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14px;
+      }
+      th,
+      td {
+        padding: 8px 6px;
+        text-align: right;
+        border-bottom: 1px solid var(--bd);
+        white-space: nowrap;
+      }
+      th:first-child,
+      td:first-child {
+        text-align: left;
+      }
+      th {
+        color: var(--mu);
+        font-weight: 600;
+      }
+      nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--card);
+        border-top: 1px solid var(--bd);
+        display: flex;
+        padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px));
+        z-index: 5;
+      }
+      nav button {
+        flex: 1;
+        border: 0;
+        background: none;
+        color: var(--mu);
+        font:
+          600 12px system-ui,
+          -apple-system,
+          sans-serif;
+        padding: 6px 0;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+      }
+      nav button span {
+        font-size: 24px;
+      }
+      nav button.on {
+        color: var(--ac);
+      }
+      button,
+      input,
+      select {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+      input[inputmode="numeric"] {
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .qa {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 10px 0;
+      }
+      .qa .btn {
+        margin: 0;
+      }
+      .seg button {
+        padding: 13px 10px;
+      }
+      .it button {
+        padding: 8px 10px;
+      }
+      #m {
+        position: fixed;
+        inset: 0;
+        background: #0009;
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+        z-index: 9;
+      }
+      #m.on {
+        display: flex;
+      }
+      #m > div {
+        background: var(--card);
+        width: 100%;
+        max-width: 720px;
+        border-radius: 20px 20px 0 0;
+        padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+        max-height: 90%;
+        overflow: auto;
+      }
+      .msg {
+        color: var(--mu);
+        text-align: center;
+        padding: 30px 10px;
+      }
+      #t {
+        position: fixed;
+        top: calc(12px + env(safe-area-inset-top, 0px));
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--tx);
+        color: var(--bg);
+        padding: 10px 16px;
+        border-radius: 12px;
+        z-index: 20;
+        display: none;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>🚗 710 Samamoyka</h1>
+      <div class="row" style="flex: none">
+        <button class="btn s" style="margin: 0; padding: 8px 12px" id="th">
+          🌓</button
+        ><button
+          class="btn s"
+          style="margin: 0; padding: 8px 12px; white-space: nowrap"
+          id="lo"
+        >
+          Chiqish
+        </button>
+      </div>
+    </header>
+    <main id="v"><div class="msg">Yuklanmoqda…</div></main>
+    <nav id="nv"></nav>
+    <div id="m"><div id="mb"></div></div>
+    <div id="t"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+    <script>
+      const SUPABASE_URL = "https://oehnshslcvkmpgscpgpu.supabase.co",
+        SUPABASE_ANON_KEY =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9laG5zaHNsY3ZrbXBnc2NwZ3B1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MjE5MzEsImV4cCI6MjExMDM5NzkzMX0.-e2MGkLAqk1-9lEyPXvUrq89CcMAePbTGPewtBtunOM";
+      const $ = (s) => document.querySelector(s);
+      const CH = [
+        "Suv to‘lovi",
+        "Elektr energiyasi",
+        "Kimyoviy vositalar",
+        "Jihozlarni ta’mirlash",
+        "Ijara",
+        "Boshqa xarajatlar",
+      ];
+      const KR = ["Samamoyka tushumi", "Qo‘shimcha daromad", "Boshqa kirimlar"];
+      const PAY = ["Naqd", "Karta", "Pul o‘tkazmasi"];
+      const NAV = [
+        ["home", "🏠", "Bosh sahifa"],
+        ["tushum", "💵", "Tushum"],
+        ["kc", "📊", "Kirim-chiqim"],
+        ["arxiv", "🗂️", "Arxiv"],
+        ["hisobot", "📄", "Hisobot"],
+      ];
+      let sb,
+        ready = false,
+        rows = [],
+        view = "home",
+        kcT = "chiqim",
+        chP = "kun",
+        arD = "",
+        arQ = "",
+        arG = "kun",
+        tuD = "",
+        kcD = "",
+        f1 = "",
+        f2 = "";
+      const pad = (n) => String(n).padStart(2, "0");
+      const iso = (d) =>
+        d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+      const toD = (s) => {
+        const [y, m, d] = s.split("-").map(Number);
+        return new Date(y, m - 1, d);
+      };
+      const dmy = (s) => (s ? s.split("-").reverse().join(".") : "");
+      const add = (d, n) => {
+        const x = new Date(d);
+        x.setDate(x.getDate() + n);
+        return x;
+      };
+      const wk = (s) => {
+        const d = toD(s);
+        return iso(add(d, -((d.getDay() + 6) % 7)));
+      };
+      const TD = () => iso(new Date());
+      const fmt = (n) =>
+        (n < 0 ? "−" : "") +
+        String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      const uzs = (n) => fmt(n) + " so‘m";
+      const esc = (s) =>
+        String(s ?? "").replace(
+          /[&<>"]/g,
+          (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+        );
+      function toast(t) {
+        const e = $("#t");
+        e.textContent = t;
+        e.style.display = "block";
+        clearTimeout(toast.h);
+        toast.h = setTimeout(() => (e.style.display = "none"), 2200);
+      }
+      function sum(r) {
+        const o = { rev: 0, oth: 0, exp: 0, cars: 0 };
+        r.forEach((x) => {
+          if (x.t == "tushum") {
+            o.rev += x.a;
+            o.cars += x.cars || 0;
+          } else if (x.t == "kirim") o.oth += x.a;
+          else o.exp += x.a;
+        });
+        o.inc = o.rev + o.oth;
+        o.net = o.inc - o.exp;
+        return o;
+      }
+      const inR = (a, b) => rows.filter((x) => x.d >= a && x.d <= b);
+      function periods() {
+        const t = TD(),
+          T = toD(t),
+          y = iso(add(T, -1)),
+          w = wk(t),
+          m = t.slice(0, 7),
+          yr = t.slice(0, 4);
+        return {
+          t: sum(rows.filter((x) => x.d == t)),
+          y: sum(rows.filter((x) => x.d == y)),
+          w: sum(rows.filter((x) => wk(x.d) == w)),
+          m: sum(rows.filter((x) => x.d.startsWith(m))),
+          yr: sum(rows.filter((x) => x.d.startsWith(yr))),
+          all: sum(rows),
+        };
+      }
+      const keyOf = {
+        kun: (s) => s,
+        hafta: wk,
+        oy: (s) => s.slice(0, 7),
+        yil: (s) => s.slice(0, 4),
+      };
+      function group(r, g) {
+        const o = {};
+        r.forEach((x) => {
+          (o[keyOf[g](x.d)] ??= []).push(x);
+        });
+        return Object.keys(o)
+          .sort()
+          .reverse()
+          .map((k) => [k, sum(o[k])]);
+      }
+      const lab = (k, g) =>
+        g == "oy"
+          ? k.slice(5) + "." + k.slice(0, 4)
+          : g == "yil"
+            ? k
+            : g == "hafta"
+              ? dmy(k) + " →"
+              : dmy(k);
+      function chart(g) {
+        const n = { kun: 14, hafta: 8, oy: 12, yil: 5 }[g];
+        const m = {};
+        rows
+          .filter((x) => x.t == "tushum")
+          .forEach((x) => {
+            const k = keyOf[g](x.d);
+            m[k] = (m[k] || 0) + x.a;
+          });
+        let ks = [],
+          t = toD(TD());
+        for (let i = 0; i < n; i++) {
+          const d =
+            g == "kun"
+              ? add(t, -i)
+              : g == "hafta"
+                ? add(t, -7 * i)
+                : g == "oy"
+                  ? new Date(t.getFullYear(), t.getMonth() - i, 1)
+                  : new Date(t.getFullYear() - i, 0, 1);
+          ks.unshift(keyOf[g](iso(d)));
+        }
+        const v = ks.map((k) => m[k] || 0),
+          mx = Math.max(...v, 1),
+          w = 320 / n;
+        return (
+          `<svg viewBox="0 0 320 150" width="100%" role="img" aria-label="Tushum grafigi">` +
+          v
+            .map((x, i) => {
+              const h = (x / mx) * 110;
+              return `<rect x="${i * w + 2}" y="${120 - h}" width="${w - 4}" height="${Math.max(h, 1)}" rx="3" fill="var(--ac)" opacity="${x ? 1 : 0.25}"><title>${lab(ks[i], g)}: ${uzs(x)}</title></rect><text x="${i * w + w / 2}" y="136" font-size="${n > 10 ? 7 : 9}" text-anchor="middle" fill="var(--mu)">${g == "kun" ? ks[i].slice(8) + "." + ks[i].slice(5, 7) : g == "hafta" ? ks[i].slice(8) + "." + ks[i].slice(5, 7) : lab(ks[i], g).slice(0, 7)}</text>`;
+            })
+            .join("") +
+          `<text x="2" y="10" font-size="9" fill="var(--mu)">maks: ${fmt(mx)}</text></svg>`
+        );
+      }
+      const cls = (n) => (n < 0 ? "neg" : "pos");
+      function K(l, v, c) {
+        return `<div class="k"><small>${l}</small><b class="${c || ""}">${v}</b></div>`;
+      }
+      function pTable(P) {
+        const r = [
+          ["Bugun", P.t],
+          ["Kecha", P.y],
+          ["Shu hafta", P.w],
+          ["Shu oy", P.m],
+          ["Shu yil", P.yr],
+          ["Umumiy", P.all],
+        ];
+        return `<div class="scroll"><table><tr><th></th><th>Tushum</th><th>Kirim</th><th>Chiqim</th><th>Foyda</th></tr>${r.map(([n, s]) => `<tr><td>${n}</td><td>${fmt(s.rev)}</td><td>${fmt(s.inc)}</td><td>${fmt(s.exp)}</td><td class="${cls(s.net)}">${fmt(s.net)}</td></tr>`).join("")}</table></div>`;
+      }
+      function home() {
+        const P = periods();
+        return `<div class="qa"><button class="btn" data-n="tushum">💵 Tushum</button><button class="btn r" data-n="kc" data-q="chiqim">➖ Chiqim</button></div><div class="grid">${K("Bugungi tushum", uzs(P.t.rev))}${K("Bugungi kirim", uzs(P.t.inc))}${K("Bugungi chiqim", uzs(P.t.exp))}${K("Bugungi sof foyda", uzs(P.t.net), cls(P.t.net))}<div class="k" style="grid-column:1/-1"><small>Umumiy balans</small><b class="${cls(P.all.net)}">${uzs(P.all.net)}</b></div>${K("Haftalik tushum", uzs(P.w.rev))}${K("Oylik tushum", uzs(P.m.rev))}</div>
+<h2>Statistika</h2><div class="card">${pTable(P)}</div>
+<div class="card"><div class="seg" id="cs">${["kun", "hafta", "oy", "yil"].map((g) => `<button data-g="${g}" class="${chP == g ? "on" : ""}">${{ kun: "Kunlik", hafta: "Haftalik", oy: "Oylik", yil: "Yillik" }[g]}</button>`).join("")}</div><div style="margin-top:10px">${chart(chP)}</div></div>`;
+      }
+      function form(t, r, p) {
+        r = r || {};
+        const d = r.d || (p == "tu" ? tuD : p == "kc" ? kcD : "") || TD();
+        const cats = t == "chiqim" ? CH : KR;
+        return `<label>Sana</label><input type="date" id="${p}d" value="${d}">
+<label>Summa (so‘m)</label><input id="${p}a" inputmode="numeric" placeholder="1 500 000" value="${r.a ? fmt(r.a) : ""}">
+${t == "tushum" ? `<label>To‘lov turi</label><select id="${p}p">${PAY.map((x) => `<option${r.pay == x ? " selected" : ""}>${x}</option>`).join("")}</select>` : `<label>Kategoriya</label><select id="${p}k">${cats.map((x) => `<option${r.cat == x ? " selected" : ""}>${x}</option>`).join("")}</select>`}
+<label>Izoh (ixtiyoriy)</label><input id="${p}n" value="${esc(r.note || "")}">`;
+      }
+      async function save(t, p, id) {
+        const a =
+            parseInt(($("#" + p + "a").value || "").replace(/\D/g, "")) || 0,
+          d = $("#" + p + "d").value;
+        if (!d) return toast("Sanani kiriting");
+        if (a <= 0) return toast("Summani kiriting");
+        const o = { t, d, a, note: $("#" + p + "n").value.trim() };
+        if (t == "tushum") {
+          o.pay = $("#" + p + "p").value;
+        } else o.cat = $("#" + p + "k").value;
+        try {
+          const q = id
+            ? sb.from("tx").update(o).eq("id", id)
+            : sb.from("tx").insert(o);
+          const { error } = await q;
+          if (error) throw error;
+          await load();
+          toast("Saqlandi ✓");
+          return true;
+        } catch (e) {
+          toast("Xatolik: saqlanmadi");
+          return false;
+        }
+      }
+      function list(r, edit = true) {
+        if (!r.length) return `<div class="msg">Ma’lumot yo‘q</div>`;
+        return r
+          .map(
+            (x) =>
+              `<div class="it"><div><b>${x.t == "tushum" ? "Tushum" : x.cat || "Kirim"}</b> <small>${dmy(x.d)}${x.t == "tushum" ? " · " + esc(x.pay || "") : ""}${x.note ? " · " + esc(x.note) : ""}</small></div><div class="a"><b class="${x.t == "chiqim" ? "neg" : "pos"}">${x.t == "chiqim" ? "−" : "+"}${fmt(x.a)}</b>${edit ? `<br><button data-e="${x.id}">Tahrir</button><button class="d" data-x="${x.id}">O‘chirish</button>` : ""}</div></div>`,
+          )
+          .join("");
+      }
+      const byNew = (a) =>
+        a
+          .slice()
+          .sort((x, y) => y.d.localeCompare(x.d) || y.id.localeCompare(x.id));
+      function tushum() {
+        const d = tuD || TD(),
+          r = rows.filter((x) => x.t == "tushum" && x.d == d),
+          s = sum(r);
+        return `<div class="card"><h2 style="margin-top:0">Kunlik tushum</h2>${form("tushum", null, "tu")}<button class="btn" id="sv">TUSHUM QO‘SHISH</button></div>
+<h2>${dmy(d)} — jami: ${uzs(s.rev)}</h2><div class="card">${list(byNew(r))}</div>`;
+      }
+      function kc() {
+        const r = byNew(rows.filter((x) => x.t == kcT)).slice(0, 40);
+        return `<div class="seg" id="ks"><button data-k="kirim" class="${kcT == "kirim" ? "on" : ""}">Kirim</button><button data-k="chiqim" class="${kcT == "chiqim" ? "on" : ""}">Chiqim</button></div>
+<div class="card">${form(kcT, null, "kc")}<button class="btn ${kcT == "chiqim" ? "r" : ""}" id="sv">${kcT == "kirim" ? "KIRIM QO‘SHISH" : "CHIQIM QO‘SHISH"}</button></div>
+<h2>Oxirgi ${kcT == "kirim" ? "kirimlar" : "chiqimlar"}</h2><div class="card">${list(r)}</div>`;
+      }
+      function arxiv() {
+        let r = rows;
+        if (arD) r = r.filter((x) => x.d == arD);
+        const q = arQ.toLowerCase().trim();
+        if (q)
+          r = r.filter((x) =>
+            [x.cat, x.note, x.pay, x.t, String(x.a), dmy(x.d)]
+              .join(" ")
+              .toLowerCase()
+              .includes(q),
+          );
+        const s = sum(r);
+        return `<div class="card"><label style="margin-top:0">Sana bo‘yicha (kalendar)</label><div class="row"><input type="date" id="ad" value="${arD}"><button class="btn s" id="ac" style="margin:0">Barchasi</button></div>
+<label>Qidirish</label><input id="aq" placeholder="izoh, kategoriya, summa…" value="${esc(arQ)}"></div>
+<div class="grid">${K("Tushum", uzs(s.rev))}${K("Kirim", uzs(s.inc))}${K("Chiqim", uzs(s.exp))}${K("Sof foyda", uzs(s.net), cls(s.net))}</div>
+<h2>Hisobotlar</h2><div class="card"><div class="seg" id="ag">${["kun", "hafta", "oy", "yil"].map((g) => `<button data-g="${g}" class="${arG == g ? "on" : ""}">${{ kun: "Kunlik", hafta: "Haftalik", oy: "Oylik", yil: "Yillik" }[g]}</button>`).join("")}</div>
+<div class="scroll" style="margin-top:8px"><table><tr><th>Davr</th><th>Tushum</th><th>Chiqim</th><th>Foyda</th></tr>${group(
+          r,
+          arG,
+        )
+          .slice(0, 60)
+          .map(
+            ([k, s]) =>
+              `<tr><td>${lab(k, arG)}</td><td>${fmt(s.rev)}</td><td>${fmt(s.exp)}</td><td class="${cls(s.net)}">${fmt(s.net)}</td></tr>`,
+          )
+          .join("")}</table></div></div>
+<h2>Operatsiyalar tarixi (${r.length})</h2><div class="card">${list(byNew(r).slice(0, 200))}</div>`;
+      }
+      function rng() {
+        const a = f1 || TD().slice(0, 8) + "01",
+          b = f2 || TD();
+        return [a, b];
+      }
+      function hisobot() {
+        const [a, b] = rng(),
+          r = inR(a, b),
+          s = sum(r);
+        return `<div class="card"><div class="row"><div><label style="margin-top:0">Dan</label><input type="date" id="f1" value="${a}"></div><div><label style="margin-top:0">Gacha</label><input type="date" id="f2" value="${b}"></div></div></div>
+<h2>${dmy(a)} — ${dmy(b)}</h2><div class="grid">${K("Tushum", uzs(s.rev))}${K("Boshqa kirim", uzs(s.oth))}${K("Chiqim", uzs(s.exp))}${K("Sof foyda", uzs(s.net), cls(s.net))}</div>
+<div class="card"><div class="scroll"><table><tr><th>Sana</th><th>Tushum</th><th>Chiqim</th><th>Foyda</th></tr>${group(
+          r,
+          "kun",
+        )
+          .map(
+            ([k, s]) =>
+              `<tr><td>${dmy(k)}</td><td>${fmt(s.rev)}</td><td>${fmt(s.exp)}</td><td class="${cls(s.net)}">${fmt(s.net)}</td></tr>`,
+          )
+          .join("")}</table></div></div>
+<button class="btn" id="xl">⬇️ Excel (CSV) yuklab olish</button><button class="btn s" id="pd">🖨️ PDF / chop etish</button><button class="btn s" id="sh">📤 Telefon orqali ulashish</button><button class="btn s" id="bk">💾 Zaxira nusxa (JSON)</button>`;
+      }
+      function csv(r) {
+        const h = [
+          "Sana",
+          "Tur",
+          "Kategoriya",
+          "Summa",
+          "Avtomobillar",
+          "To‘lov turi",
+          "Izoh",
+        ];
+        const q = (v) => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+        return (
+          "\uFEFF" +
+          [h.map(q).join(";")]
+            .concat(
+              r
+                .slice()
+                .sort((x, y) => x.d.localeCompare(y.d))
+                .map((x) =>
+                  [
+                    dmy(x.d),
+                    { tushum: "Tushum", kirim: "Kirim", chiqim: "Chiqim" }[x.t],
+                    x.t == "tushum" ? "Samamoyka tushumi" : x.cat,
+                    x.t == "chiqim" ? -x.a : x.a,
+                    x.cars || "",
+                    x.pay || "",
+                    x.note || "",
+                  ]
+                    .map(q)
+                    .join(";"),
+                ),
+            )
+            .join("\r\n")
+        );
+      }
+      function dl(name, data) {
+        const u = URL.createObjectURL(new Blob([data], { type: "text/plain" }));
+        const a = document.createElement("a");
+        a.href = u;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(u), 2000);
+      }
+      function openM(h) {
+        $("#mb").innerHTML = h;
+        $("#m").classList.add("on");
+      }
+      function closeM() {
+        $("#m").classList.remove("on");
+      }
+      function edit(id) {
+        const x = rows.find((r) => r.id == id);
+        if (!x) return;
+        openM(
+          `<h2 style="margin-top:0">Tahrirlash</h2>${form(x.t, x, "ed")}<button class="btn" id="es">SAQLASH</button><button class="btn s" id="ec">Bekor qilish</button>`,
+        );
+        $("#es").onclick = async () => {
+          if (await save(x.t, "ed", id)) closeM();
+        };
+        $("#ec").onclick = closeM;
+      }
+      async function del(id) {
+        if (!confirm("Ushbu yozuv o‘chirilsinmi?")) return;
+        try {
+          const { error } = await sb.from("tx").delete().eq("id", id);
+          if (error) throw error;
+          await load();
+          toast("O‘chirildi");
+        } catch (e) {
+          toast("Xatolik");
+        }
+      }
+      const V = { home, tushum, kc, arxiv, hisobot };
+      function render() {
+        if (!ready) return;
+        const a = document.activeElement,
+          keep =
+            a && a.id && a.tagName == "INPUT" && a.type != "date"
+              ? [a.id, a.selectionStart]
+              : null;
+        $("#v").innerHTML = V[view]();
+        $("#nv").innerHTML = NAV.map(
+          ([k, i, l]) =>
+            `<button data-n="${k}" class="${view == k ? "on" : ""}"><span>${i}</span>${l}</button>`,
+        ).join("");
+        if (keep) {
+          const e = document.getElementById(keep[0]);
+          if (e) {
+            e.focus();
+            try {
+              e.setSelectionRange(keep[1], keep[1]);
+            } catch (_) {}
+          }
+        }
+      }
+      document.addEventListener("click", async (e) => {
+        const b = e.target.closest("button");
+        if (!b) return;
+        if (b.dataset.n) {
+          view = b.dataset.n;
+          if (b.dataset.q) kcT = b.dataset.q;
+          render();
+          scrollTo(0, 0);
+        } else if (b.dataset.e) edit(b.dataset.e);
+        else if (b.dataset.x) del(b.dataset.x);
+        else if (b.dataset.g) {
+          if (b.parentNode.id == "cs") chP = b.dataset.g;
+          else arG = b.dataset.g;
+          render();
+        } else if (b.dataset.k) {
+          kcT = b.dataset.k;
+          render();
+        } else if (b.id == "sv") {
+          const t = view == "tushum" ? "tushum" : kcT,
+            p = view == "tushum" ? "tu" : "kc";
+          const dd = $("#" + p + "d").value;
+          if (await save(t, p, null)) {
+            if (p == "tu") tuD = dd;
+            else kcD = dd;
+            render();
+          }
+        } else if (b.id == "ac") {
+          arD = "";
+          arQ = "";
+          render();
+        } else if (b.id == "xl") {
+          const [a, c] = rng();
+          dl(`samamoyka_${dmy(a)}_${dmy(c)}.csv`, csv(inR(a, c)));
+        } else if (b.id == "bk")
+          dl(`samamoyka_zaxira_${TD()}.json`, JSON.stringify(rows, null, 1));
+        else if (b.id == "pd") {
+          try {
+            print();
+          } catch (_) {
+            toast("Chop etish mavjud emas");
+          }
+        } else if (b.id == "sh") {
+          const [a, c] = rng(),
+            s = sum(inR(a, c)),
+            t = `710 Samamoyka hisoboti ${dmy(a)} — ${dmy(c)}\nTushum: ${uzs(s.rev)}\nKirim: ${uzs(s.inc)}\nChiqim: ${uzs(s.exp)}\nSof foyda: ${uzs(s.net)}`;
+          try {
+            if (navigator.share) await navigator.share({ text: t });
+            else {
+              await navigator.clipboard.writeText(t);
+              toast("Nusxa olindi");
+            }
+          } catch (_) {
+            toast("Ulashib bo‘lmadi");
+          }
+        } else if (b.id == "lg") login();
+        else if (b.id == "lo") logout();
+        else if (b.id == "th") {
+          const r = document.documentElement,
+            dk = getComputedStyle(r).colorScheme == "dark";
+          r.dataset.theme = dk ? "light" : "dark";
+          try {
+            localStorage.setItem("th", r.dataset.theme);
+          } catch (_) {}
+        }
+      });
+      document.addEventListener("input", (e) => {
+        const i = e.target;
+        if (i.id && i.id.endsWith("a") && i.inputMode == "numeric") {
+          const n = i.value.replace(/\D/g, "");
+          i.value = n ? fmt(+n) : "";
+        } else if (i.id == "aq") {
+          arQ = i.value;
+          render();
+        }
+      });
+      document.addEventListener("change", (e) => {
+        const i = e.target;
+        if (i.id == "ad") {
+          arD = i.value;
+          render();
+        } else if (i.id == "f1") {
+          f1 = i.value;
+          render();
+        } else if (i.id == "f2") {
+          f2 = i.value;
+          render();
+        } else if (i.id == "tud") {
+          tuD = i.value;
+          render();
+        } else if (i.id == "kcd") {
+          kcD = i.value;
+        }
+      });
+      $("#m").onclick = (e) => {
+        if (e.target.id == "m") closeM();
+      };
+      try {
+        const s = localStorage.getItem("th");
+        if (s) document.documentElement.dataset.theme = s;
+      } catch (_) {}
+      init();
+      async function init() {
+        if (!window.supabase || SUPABASE_URL.includes("YOUR")) {
+          $("#v").innerHTML =
+            '<div class="msg">Faylning boshidagi SUPABASE_URL va SUPABASE_ANON_KEY ni to‘ldiring.</div>';
+          return;
+        }
+        sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const { data } = await sb.auth.getSession();
+        if (data.session) await start();
+        else loginView();
+      }
+      function loginView() {
+        ready = false;
+        $("#nv").innerHTML = "";
+        $("#lo").style.display = "none";
+        $("#v").innerHTML =
+          `<div class="card"><h2 style="margin-top:0">Tizimga kirish</h2><label>Email</label><input id="em" type="email" autocomplete="username"><label>Parol</label><input id="pw" type="password" autocomplete="current-password"><button class="btn" id="lg">KIRISH</button></div>`;
+      }
+      async function login() {
+        const { error } = await sb.auth.signInWithPassword({
+          email: $("#em").value.trim(),
+          password: $("#pw").value,
+        });
+        if (error) return toast("Email yoki parol noto‘g‘ri");
+        start();
+      }
+      async function logout() {
+        await sb.auth.signOut();
+        rows = [];
+        loginView();
+      }
+      async function start() {
+        $("#lo").style.display = "";
+        ready = true;
+        $("#v").innerHTML = '<div class="msg">Yuklanmoqda…</div>';
+        await load();
+      }
+      async function load() {
+        let all = [],
+          from = 0;
+        for (;;) {
+          const { data, error } = await sb
+            .from("tx")
+            .select("*")
+            .order("d", { ascending: false })
+            .range(from, from + 999);
+          if (error) return toast("Bazadan o‘qib bo‘lmadi");
+          all = all.concat(data);
+          if (data.length < 1000) break;
+          from += 1000;
+        }
+        rows = all.map((x) => ({ ...x, a: Number(x.a) }));
+        render();
+      }
+      document.addEventListener("keydown", (e) => {
+        if (e.key == "Enter" && e.target.id == "pw") login();
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden && ready) load();
+      });
+    </script>
+  </body>
+</html>
