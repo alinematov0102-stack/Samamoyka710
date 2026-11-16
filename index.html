@@ -657,7 +657,7 @@ ${t == "tushum" ? `<label>To‘lov turi</label><select id="${p}p">${PAY.map((x) 
               `<tr><td>${dmy(k)}</td><td>${fmt(s.rev)}</td><td>${fmt(s.exp)}</td><td class="${cls(s.net)}">${fmt(s.net)}</td></tr>`,
           )
           .join("")}</table></div></div>
-<button class="btn" id="xl">⬇️ Excel (CSV) yuklab olish</button><button class="btn s" id="pd">🖨️ PDF / chop etish</button><button class="btn s" id="sh">📤 Telefon orqali ulashish</button><button class="btn s" id="bk">💾 Zaxira nusxa (JSON)</button>`;
+<button class="btn" id="xl">⬇️ Excel (CSV) yuklab olish</button><button class="btn s" id="pd">🖨️ PDF / chop etish</button><button class="btn s" id="sh">📤 Telefon orqali ulashish</button><button class="btn s" id="bk">💾 Zaxira nusxa (JSON)</button><button class="btn s" id="pwo">🔑 Parolni o‘zgartirish</button>`;
       }
       function csv(r) {
         const h = [
@@ -828,7 +828,8 @@ ${t == "tushum" ? `<label>To‘lov turi</label><select id="${p}p">${PAY.map((x) 
           } catch (_) {
             toast("Ulashib bo‘lmadi");
           }
-        } else if (b.id == "lg") login();
+        } else if (b.id == "pwo") openPw();
+        else if (b.id == "lg") login();
         else if (b.id == "lo") logout();
         else if (b.id == "th") {
           const r = document.documentElement,
@@ -900,6 +901,35 @@ ${t == "tushum" ? `<label>To‘lov turi</label><select id="${p}p">${PAY.map((x) 
         });
         if (error) return toast("Email yoki parol noto‘g‘ri");
         start();
+      }
+      function openPw() {
+        openM(
+          `<h2 style="margin-top:0">Parolni o‘zgartirish</h2><label>Hozirgi parol</label><input id="po" type="password" autocomplete="current-password"><label>Yangi parol (kamida 6 ta belgi)</label><input id="pn" type="password" autocomplete="new-password"><label>Yangi parolni takrorlang</label><input id="pc" type="password" autocomplete="new-password"><button class="btn" id="ps">SAQLASH</button><button class="btn s" id="pe">Bekor qilish</button>`,
+        );
+        $("#pe").onclick = closeM;
+        $("#ps").onclick = async () => {
+          const o = $("#po").value,
+            n = $("#pn").value,
+            c = $("#pc").value;
+          if (n.length < 6)
+            return toast("Yangi parol kamida 6 ta belgi bo‘lsin");
+          if (n !== c) return toast("Yangi parollar mos kelmadi");
+          if (n === o) return toast("Yangi parol eskisidan farq qilsin");
+          try {
+            const { data: u } = await sb.auth.getUser();
+            const { error: e1 } = await sb.auth.signInWithPassword({
+              email: u.user.email,
+              password: o,
+            });
+            if (e1) return toast("Hozirgi parol noto‘g‘ri");
+            const { error } = await sb.auth.updateUser({ password: n });
+            if (error) throw error;
+            closeM();
+            toast("Parol o‘zgartirildi ✓");
+          } catch (e) {
+            toast("Xatolik: parol o‘zgarmadi");
+          }
+        };
       }
       async function logout() {
         await sb.auth.signOut();
