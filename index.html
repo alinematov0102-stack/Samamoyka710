@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="uz">
   <head>
     <meta charset="utf-8" />
@@ -581,12 +580,12 @@ ${t == "tushum" ? `<label>To‘lov turi</label><select id="${p}p">${PAY.map((x) 
           return false;
         }
       }
-      function list(r, edit = true) {
+      function list(r, arch = false, edit = true) {
         if (!r.length) return `<div class="msg">Ma’lumot yo‘q</div>`;
         return r
           .map(
             (x) =>
-              `<div class="it"><div><b>${x.t == "tushum" ? "Tushum" : x.cat || "Kirim"}</b> <small>${dmy(x.d)}${x.t == "tushum" ? " · " + esc(x.pay || "") : ""}${x.note ? " · " + esc(x.note) : ""}</small></div><div class="a"><b class="${x.t == "chiqim" ? "neg" : "pos"}">${x.t == "chiqim" ? "−" : "+"}${fmt(x.a)}</b>${edit ? `<br><button data-e="${x.id}">Tahrir</button><button class="d" data-x="${x.id}">O‘chirish</button>` : ""}</div></div>`,
+              `<div class="it"><div><b>${x.t == "tushum" ? "Tushum" : x.cat || "Kirim"}</b>${arch && x.hidden ? ` <span style="color:var(--mu);font-size:12px">(ro‘yxatdan olingan)</span>` : ""} <small>${dmy(x.d)}${x.t == "tushum" ? " · " + esc(x.pay || "") : ""}${x.note ? " · " + esc(x.note) : ""}</small></div><div class="a"><b class="${x.t == "chiqim" ? "neg" : "pos"}">${x.t == "chiqim" ? "−" : "+"}${fmt(x.a)}</b>${edit ? `<br><button data-e="${x.id}">Tahrir</button>${arch && x.hidden ? `<button data-r="${x.id}">Qaytarish</button>` : ""}${arch ? `<button class="d" data-x="${x.id}">Butunlay o‘chirish</button>` : `<button class="d" data-h="${x.id}">O‘chirish</button>`}` : ""}</div></div>`,
           )
           .join("");
       }
@@ -596,13 +595,16 @@ ${t == "tushum" ? `<label>To‘lov turi</label><select id="${p}p">${PAY.map((x) 
           .sort((x, y) => y.d.localeCompare(x.d) || y.id.localeCompare(x.id));
       function tushum() {
         const d = tuD || TD(),
-          r = rows.filter((x) => x.t == "tushum" && x.d == d),
+          r = rows.filter((x) => x.t == "tushum" && x.d == d && !x.hidden),
           s = sum(r);
         return `<div class="card"><h2 style="margin-top:0">Kunlik tushum</h2>${form("tushum", null, "tu")}<button class="btn" id="sv">TUSHUM QO‘SHISH</button></div>
 <h2>${dmy(d)} — jami: ${uzs(s.rev)}</h2><div class="card">${list(byNew(r))}</div>`;
       }
       function kc() {
-        const r = byNew(rows.filter((x) => x.t == kcT)).slice(0, 40);
+        const r = byNew(rows.filter((x) => x.t == kcT && !x.hidden)).slice(
+          0,
+          40,
+        );
         return `<div class="seg" id="ks"><button data-k="kirim" class="${kcT == "kirim" ? "on" : ""}">Kirim</button><button data-k="chiqim" class="${kcT == "chiqim" ? "on" : ""}">Chiqim</button></div>
 <div class="card">${form(kcT, null, "kc")}<button class="btn ${kcT == "chiqim" ? "r" : ""}" id="sv">${kcT == "kirim" ? "KIRIM QO‘SHISH" : "CHIQIM QO‘SHISH"}</button></div>
 <h2>Oxirgi ${kcT == "kirim" ? "kirimlar" : "chiqimlar"}</h2><div class="card">${list(r)}</div>`;
@@ -633,7 +635,7 @@ ${t == "tushum" ? `<label>To‘lov turi</label><select id="${p}p">${PAY.map((x) 
               `<tr><td>${lab(k, arG)}</td><td>${fmt(s.rev)}</td><td>${fmt(s.exp)}</td><td class="${cls(s.net)}">${fmt(s.net)}</td></tr>`,
           )
           .join("")}</table></div></div>
-<h2>Operatsiyalar tarixi (${r.length})</h2><div class="card">${list(byNew(r).slice(0, 200))}</div>`;
+<h2>Operatsiyalar tarixi (${r.length})</h2><div class="card">${list(byNew(r).slice(0, 200), true)}</div>`;
       }
       function rng() {
         const a = f1 || TD().slice(0, 8) + "01",
@@ -720,8 +722,24 @@ ${t == "tushum" ? `<label>To‘lov turi</label><select id="${p}p">${PAY.map((x) 
         };
         $("#ec").onclick = closeM;
       }
+      async function setHidden(id, v) {
+        try {
+          const { error } = await sb
+            .from("tx")
+            .update({ hidden: v })
+            .eq("id", id);
+          if (error) throw error;
+          await load();
+          toast(v ? "Ro‘yxatdan olindi, arxivda qoldi" : "Qaytarildi");
+        } catch (e) {
+          toast("Xatolik: SQL yangilanganmi?");
+        }
+      }
       async function del(id) {
-        if (!confirm("Ushbu yozuv o‘chirilsinmi?")) return;
+        if (
+          !confirm("Arxivdan ham butunlay o‘chirilsinmi? Qaytarib bo‘lmaydi.")
+        )
+          return;
         try {
           const { error } = await sb.from("tx").delete().eq("id", id);
           if (error) throw error;
@@ -764,6 +782,8 @@ ${t == "tushum" ? `<label>To‘lov turi</label><select id="${p}p">${PAY.map((x) 
           scrollTo(0, 0);
         } else if (b.dataset.e) edit(b.dataset.e);
         else if (b.dataset.x) del(b.dataset.x);
+        else if (b.dataset.h) setHidden(b.dataset.h, true);
+        else if (b.dataset.r) setHidden(b.dataset.r, false);
         else if (b.dataset.g) {
           if (b.parentNode.id == "cs") chP = b.dataset.g;
           else arG = b.dataset.g;
